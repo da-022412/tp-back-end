@@ -81,7 +81,7 @@ const ServiceForm = () => {
                 .replace(/&/g, 'and')
                 .replace(' - ', ' ')
                 .replace('-', '')
-                .replace(/[^a-zA-Z0-9. ]/g, '')
+                .replace(/^[^-\s][a-zA-Z0-9_\s-]+$/g, '')
                 .replace(/ /g, '-')
                 .toLowerCase(),
         });
@@ -376,7 +376,10 @@ const ServiceForm = () => {
                                         .replace(/&/g, 'and')
                                         .replace(' - ', ' ')
                                         .replace(/-/g, '')
-                                        .replace(/[^a-zA-Z0-9. ]/g, '')
+                                        .replace(
+                                            /^[^-\s][a-zA-Z0-9_\s-]+$/g,
+                                            ''
+                                        )
                                         .replace(/ /g, '-')
                                         .toLowerCase()}
                                     onChange={(e) => onChange(e)}

@@ -84,11 +84,11 @@ const EditForm = () => {
             ...newpage,
             [e.target.name]: e.target.value,
             menuname: menuname === '' ? pagetitle : menuname,
-            pagelink: pagetitle
+            pagelink: e.target.value
                 .replace(/&/g, 'and')
                 .replace(' - ', ' ')
                 .replace('-', '')
-                .replace(/[^a-zA-Z0-9. ]/g, '')
+                .replace(/^[^-\s][a-zA-Z0-9_\s-]+$/g, '')
                 .replace(/ /g, '-')
                 .toLowerCase(),
         });
@@ -443,7 +443,10 @@ const EditForm = () => {
                                         .replace(/&/g, 'and')
                                         .replace(' - ', ' ')
                                         .replace(/-/g, ' ')
-                                        .replace(/[^a-zA-Z0-9. ]/g, '')
+                                        .replace(
+                                            /^[^-\s][a-zA-Z0-9_\s-]+$/g,
+                                            ''
+                                        )
                                         .replace(/ /g, '-')
                                         .toLowerCase()}
                                     onChange={(e) => onChange(e)}
