@@ -77,13 +77,14 @@ const ServiceForm = () => {
             ...newservice,
             [e.target.name]: e.target.value,
             menuname: menuname === '' ? servicetitle : e.target.value,
-            servicelink: e.target.value
+            servicelink: servicetitle
+                .toLowerCase()
                 .replace(/&/g, 'and')
-                .replace(' - ', ' ')
+                .replace(' - ', '')
                 .replace('-', '')
-                .replace(/^[^-\s][a-zA-Z0-9_\s-]+$/g, '')
                 .replace(/ /g, '-')
-                .toLowerCase(),
+                .replace(/[^\w-]/g, '')
+                .replace(/[^-]+-$/, ''),
         });
     };
 
@@ -344,7 +345,7 @@ const ServiceForm = () => {
             setUploadedBox({});
             setGallery([]);
             setMessage('');
-            history.push('/services');
+            history.go(0);
         }
     };
 
@@ -373,16 +374,14 @@ const ServiceForm = () => {
                                     type='text'
                                     name='servicelink'
                                     value={servicetitle
+                                        .toLowerCase()
                                         .replace(/&/g, 'and')
-                                        .replace(' - ', ' ')
-                                        .replace(/-/g, '')
-                                        .replace(
-                                            /^[^-\s][a-zA-Z0-9_\s-]+$/g,
-                                            ''
-                                        )
+                                        .replace(' - ', '')
+                                        .replace('-', '')
                                         .replace(/ /g, '-')
-                                        .toLowerCase()}
-                                    onChange={(e) => onChange(e)}
+                                        .replace(/[^\w-]/g, '')
+                                        .replace(/[^\w-]+-$/, '')}
+                                    onChange={onChange}
                                     disabled
                                 />
                             </div>

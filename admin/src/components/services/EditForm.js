@@ -84,13 +84,14 @@ const EditForm = () => {
             ...newservice,
             [e.target.name]: e.target.value,
             menuname: menuname === '' ? servicetitle : menuname,
-            servicelink: e.target.value
+            servicelink: servicetitle
+                .toLowerCase()
                 .replace(/&/g, 'and')
-                .replace(' - ', ' ')
+                .replace(' - ', '')
                 .replace('-', '')
-                .replace(/^[^-\s][a-zA-Z0-9_\s-]+$/g, '')
                 .replace(/ /g, '-')
-                .toLowerCase(),
+                .replace(/[^\w-]/g, '')
+                .replace(/[^]+-$/, ''),
         });
     };
 
@@ -444,16 +445,14 @@ const EditForm = () => {
                                     type='text'
                                     name='servicelink'
                                     value={servicetitle
+                                        .toLowerCase()
                                         .replace(/&/g, 'and')
-                                        .replace(' - ', ' ')
-                                        .replace(/-/g, ' ')
-                                        .replace(
-                                            /^[^-\s][a-zA-Z0-9_\s-]+$/g,
-                                            ''
-                                        )
+                                        .replace(' - ', '')
+                                        .replace('-', '')
                                         .replace(/ /g, '-')
-                                        .toLowerCase()}
-                                    onChange={(e) => onChange(e)}
+                                        .replace(/[^\w-]/g, '')
+                                        .replace(/[^\w-]+-$/, '')}
+                                    onChange={onChange}
                                     disabled
                                 />
                             </div>

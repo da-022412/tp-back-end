@@ -84,13 +84,14 @@ const EditForm = () => {
             ...newpage,
             [e.target.name]: e.target.value,
             menuname: menuname === '' ? pagetitle : menuname,
-            pagelink: e.target.value
+            pagelink: pagetitle
+                .toLowerCase()
                 .replace(/&/g, 'and')
-                .replace(' - ', ' ')
+                .replace(' - ', '')
                 .replace('-', '')
-                .replace(/^[^-\s][a-zA-Z0-9_\s-]+$/g, '')
                 .replace(/ /g, '-')
-                .toLowerCase(),
+                .replace(/[^\w-]/g, '')
+                .replace(/[^]+-$/, ''),
         });
     };
 
@@ -440,15 +441,13 @@ const EditForm = () => {
                                     type='text'
                                     name='pagelink'
                                     value={pagetitle
+                                        .toLowerCase()
                                         .replace(/&/g, 'and')
-                                        .replace(' - ', ' ')
-                                        .replace(/-/g, ' ')
-                                        .replace(
-                                            /^[^-\s][a-zA-Z0-9_\s-]+$/g,
-                                            ''
-                                        )
+                                        .replace(' - ', '')
+                                        .replace('-', '')
                                         .replace(/ /g, '-')
-                                        .toLowerCase()}
+                                        .replace(/[^\w-]/g, '')
+                                        .replace(/[^\w-]+-$/, '')}
                                     onChange={(e) => onChange(e)}
                                     disabled
                                 />
