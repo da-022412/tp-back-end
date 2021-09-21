@@ -573,7 +573,7 @@ const PageForm = () => {
                                     <input
                                         className='uploadButtonb-input'
                                         type='file'
-                                        accept='image/jpeg,image/jpg,image/png,image/svg'
+                                        accept='image/*'
                                         id='uploadb'
                                         name='fileb'
                                         onChange={boxChange}
