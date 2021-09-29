@@ -15,7 +15,7 @@ const path = require('path');
 const mailgunAuth = {
     auth: {
         api_key: 'key-892b6a66c2f9dba1421caed942d29a23',
-        domain: 'mg.advancedauto-md.com',
+        domain: 'mg.ferociousmediaweb.com',
     },
 };
 
@@ -72,6 +72,7 @@ router.post(
                 fullname: req.body.fullname,
                 phone: req.body.phone,
                 clientemail: req.body.clientemail,
+                how: req.body.how,
                 message: req.body.message,
             });
 
@@ -87,8 +88,8 @@ router.post(
             });
 
             const mailOptions = {
-                from: `"TP Detailing" <postmaster@mg.advancedauto-md.com>`,
-                to: `advancedautorep@gmail.com`,
+                from: `"TP Detailing" <postmaster@mg.ferociousmediaweb.com>`,
+                to: `norman@ferociousmedia.com`,
                 bcc: `websites@ferociousmedia.com`,
                 replyTo: `${req.body.clientemail}`,
                 subject: 'New inquiry from website',
@@ -96,7 +97,7 @@ router.post(
             };
 
             const mailOptionsTwo = {
-                from: `"TP Detailing" <postmaster@mg.advancedauto-md.com>`,
+                from: `"TP Detailing" <postmaster@mg.ferociousmediaweb.com>`,
                 to: `${req.body.clientemail}`,
                 subject: 'Thanks for contacting us',
                 html: resToSend,

@@ -111,37 +111,47 @@ const Register = (props) => {
 
     const onPress = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('newimg', file);
+        const fd = new FormData();
+        fd.append('newimg', file);
 
         try {
-            const res = await axios.post('api/uploads', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                onUploadProgress: (progressEvent) => {
-                    setUploadPer(
-                        parseInt(
-                            Math.round(
-                                (progressEvent.loaded * 100) /
-                                    progressEvent.total
+            await axios
+                .post('api/uploads', fd, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        setUploadPer(
+                            parseInt(
+                                Math.round(
+                                    (progressEvent.loaded * 100) /
+                                        progressEvent.total
+                                )
                             )
-                        )
-                    );
-                    // Clear percentage
-                    setTimeout(() => setUploadPer(0), 20000);
-                },
-            });
+                        );
+                        // Clear percentage
+                        setTimeout(() => setUploadPer(0), 20000);
+                    },
+                })
+                .then((res) => {
+                    setFormData({
+                        ...formData,
+                        photo: res.data.filePath.replace('uploads/', ''),
+                    });
+                    const { newimg, filePath } = res.data;
 
-            const { newimg, filePath } = res.data;
+                    setUploadedFile({ newimg, filePath });
 
-            setUploadedFile({ newimg, filePath });
-            setMessage('File Uploaded');
+                    setMessage('File Uploaded', 'success');
+                })
+                .catch((error) => {
+                    setMessage('Error after uploading file', 'error');
+                });
         } catch (err) {
             if (err.response.status === 500) {
-                setMessage('There was a problem with the server');
+                setMessage('There was a problem with the server', 'error');
             } else {
-                setMessage(err.response.data.msg);
+                setMessage(err.response.data.msg, err.response.data.type);
             }
         }
     };
