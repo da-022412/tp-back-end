@@ -195,16 +195,6 @@ router.post('/reset', async (req, res) => {
                         rejectUnauthorized: false,
                     },
                 });
-
-                // setup email data with unicode symbols
-                let info = transporter.sendMail({
-                    from: '"Airpath" <no-reply@airpath.us>',
-                    to: `${user.email}`,
-                    subject: `Reset your password`,
-                    html: `<p>You requested to reset your passowrd</p>
-                  <p><b>Reply:</b> ${newDiscussion.discussion}</p>
-                  <p>Click this link to proceed<a href="https://ferociousmediaweb.com/reset/${token}">Passowrd Reset</a></p>`,
-                });
             });
         });
     });
